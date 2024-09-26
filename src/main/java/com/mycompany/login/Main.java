@@ -13,8 +13,8 @@ public class Main {
         String lastName;
 
         //Declare variables that will be compared against stored variables
-        String loginUsername = "";
-        String loginPassword = "";
+        String login_Username;
+        String login_Password;
 
         //Initialise Scanner object for registering user
         Scanner userInput = new Scanner(System.in);
@@ -35,9 +35,22 @@ public class Main {
        password = userInput.next();
        
         //Initialise Login object
-        Login user1 = new Login(username,password,firstName,lastName);
+        Login user = new Login(username,password,firstName,lastName);
         
-        user1.registerUser();
+        user.registerUser();
+        
+        //Initialise new scanner object to store login details
+        Scanner userLogin = new Scanner(System.in);
+        
+        //User login process, Prompt user
+        System.out.println("=============Login to your profile===================");
+        System.out.print("Enter username: ");
+        login_Username = userLogin.next();
+       
+        System.out.print("Enter password: ");
+        login_Password = userLogin.next();
+        
+        System.out.println(user.loginUser(login_Username, login_Password));
         
     }
 }

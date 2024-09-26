@@ -91,7 +91,7 @@ public class Login {
     }
     
     
-     public String registerUser(){
+    public String registerUser(){
 
        if(checkUserName()){
            System.out.println("Username successfully captured");
@@ -110,7 +110,11 @@ public class Login {
                    " that the password at least 8 letters, a capital letter"+
                    " a number and a special character";
        }
-
+    }
+    
+    //Method to compare username and password to stored variables
+    public Boolean loginUser(String username, String password){
+        return this.getUsername().equals(username) && this.getPassword().equals(password);
     }
 }
 
