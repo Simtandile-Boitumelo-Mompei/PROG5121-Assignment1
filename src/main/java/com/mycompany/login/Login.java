@@ -10,6 +10,14 @@ public class Login {
     private String firstName;
     private String lastName;
 
+    public Login(String username, String password, String firstname, String lastname){
+        this.username = username;
+        this.password = password;
+        this.firstName = firstname;
+        this.lastName = lastname;
+        
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -81,6 +89,28 @@ public class Login {
             return false;
         }
     }
+    
+    
+     public String registerUser(){
 
+       if(checkUserName()){
+           System.out.println("Username successfully captured");
+       }else{
+           System.out.println( "Username is not correctly formatted"+
+                   ", please ensure that your username contains an underscore"+
+                   " and is no more than 5 characters in length");
+       }
+
+
+       if(checkPasswordComplexity()){
+           return "Password captured successfully";
+       }
+       else{
+           return "Password is not correctly formatted, please ensure"+
+                   " that the password at least 8 letters, a capital letter"+
+                   " a number and a special character";
+       }
+
+    }
 }
 
