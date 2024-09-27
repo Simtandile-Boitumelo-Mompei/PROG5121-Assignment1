@@ -50,7 +50,7 @@ public class Main {
         System.out.print("Enter password: ");
         login_Password = userLogin.next();
         
-        System.out.println(user.loginUser(login_Username, login_Password));
+        System.out.println(user.returnLoginStatus(login_Username,login_Password));
         
     }
 }

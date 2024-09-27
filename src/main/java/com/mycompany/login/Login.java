@@ -116,5 +116,15 @@ public class Login {
     public Boolean loginUser(String username, String password){
         return this.getUsername().equals(username) && this.getPassword().equals(password);
     }
+    
+    //Method to check if user login was successful
+     public String  returnLoginStatus(String username, String password){
+        if(loginUser(username,password)){
+            return "Welcome "+ this.getFirstName()+", "+ this.getLastName()+" it's great to see you.";
+        }
+        else{
+            return "Username or password is incorrect, please try again!";
+        }
+    }
 }
 
