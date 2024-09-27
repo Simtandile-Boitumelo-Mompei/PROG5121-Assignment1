@@ -50,12 +50,12 @@ public class Login {
         this.lastName = lastName;
     }
 
+    //Method that checks that username length contains an underscore and length is 5 characters
     public boolean checkUserName(){
-
         return username.contains("_") && username.length()<=5;
-       // return username.contains("_") && username.length()<=5;
     }
 
+    //Method to checks the complexity of a password
     public boolean checkPasswordComplexity(){
         int length = password.length();
         int digit = 0;
@@ -83,32 +83,26 @@ public class Login {
             }
         }
 
-        if(upperCaseLetter == 1 && specialCharacter == 1 && digit == 1){
-            return true;
-        }else{
-            return false;
-        }
+        return upperCaseLetter == 1 && specialCharacter == 1 && digit == 1;
     }
     
-    
-    public String registerUser(){
-
-       if(checkUserName()){
-           System.out.println("Username successfully captured");
-       }else{
-           System.out.println( "Username is not correctly formatted"+
+    //Method that checks if username and password are correctly formatted before registering a user
+    public String registerUser(){   
+      if(!checkUserName()){
+          return "Username is not correctly formatted"+
                    ", please ensure that your username contains an underscore"+
-                   " and is no more than 5 characters in length");
-       }
-       
-       if(checkPasswordComplexity()){
-           return "Password captured successfully";
-       }
-       else
-           return "Password is not correctly formatted, please ensure"+
+                   " and is no more than 5 characters in length";     
+      }else{
+          System.out.println("Username captured successfully");
+      }
+      
+      if(checkPasswordComplexity()){
+          return "Password captured successfully ";
+      }else{ 
+         return "Password is not correctly formatted, please ensure"+
                    " that the password at least 8 letters, a capital letter"+
                    " a number and a special character";
-        
+      }
     }
     
     //Method to compare username and password to stored variables
