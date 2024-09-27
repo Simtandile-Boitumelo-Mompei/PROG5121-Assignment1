@@ -100,16 +100,15 @@ public class Login {
                    ", please ensure that your username contains an underscore"+
                    " and is no more than 5 characters in length");
        }
-
-
+       
        if(checkPasswordComplexity()){
            return "Password captured successfully";
        }
-       else{
+       else
            return "Password is not correctly formatted, please ensure"+
                    " that the password at least 8 letters, a capital letter"+
                    " a number and a special character";
-       }
+        
     }
     
     //Method to compare username and password to stored variables
