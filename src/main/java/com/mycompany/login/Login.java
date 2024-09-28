@@ -10,6 +10,7 @@ public class Login {
     private String firstName;
     private String lastName;
 
+    //Login class constructor
     public Login(String username, String password, String firstname, String lastname){
         this.username = username;
         this.password = password;
@@ -50,12 +51,12 @@ public class Login {
         this.lastName = lastName;
     }
 
-    //Method that checks that username length contains an underscore and length is 5 characters
+    //Method that checks username length contains an underscore and length is 5 characters
     public boolean checkUserName(){
         return username.contains("_") && username.length()<=5;
     }
 
-    //Method to checks the complexity of a password
+    //Method to check the complexity of user's password
     public boolean checkPasswordComplexity(){
         int length = password.length();
         int digit = 0;
