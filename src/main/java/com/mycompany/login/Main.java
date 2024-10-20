@@ -2,6 +2,7 @@
 package com.mycompany.login;
 
 import java.util.*;
+import javax.swing.JOptionPane;
 
 public class Main {
     public static void main(String[] args) {
@@ -56,5 +57,23 @@ public class Main {
             System.out.println(user.returnLoginStatus(login_Username,login_Password));
         }
         
+        if(user.loginUser(username,password)){
+            JOptionPane.showMessageDialog(null, "Welcome to EasyKanban");
+            
+            while(user.loginUser(username, password)){
+                String [] options = {"1 ","2","3"};
+               
+                int selection = (int) JOptionPane.showInputDialog(null, "Select an option: \n 1. Add Tasks\n 2. Show Report\n 3. Quit", "Menu"
+                ,JOptionPane.INFORMATION_MESSAGE,null,options, options[0]);
+                
+                switch(selection){
+                    case 1 -> JOptionPane.showMessageDialog(null, "We adding tasks");
+                    case 2 -> JOptionPane.showMessageDialog(null, "Coming Soon");
+                    case 3 -> JOptionPane.showMessageDialog(null, "Closing program");
+                    default -> JOptionPane.showMessageDialog(null, "Entered invalid input");
+                }
+                
+            }
+        }
     }
 }
