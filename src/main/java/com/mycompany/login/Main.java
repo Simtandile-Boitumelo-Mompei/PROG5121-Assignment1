@@ -2,6 +2,7 @@
 package com.mycompany.login;
 
 import java.util.*;
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -60,17 +61,43 @@ public class Main {
         if(user.loginUser(username,password)){
             JOptionPane.showMessageDialog(null, "Welcome to EasyKanban");
             
+            //Declare task variables
+            String taskName;
+            String taskDescription;
+            String developerDetails;
+            String taskStatus ;
+            int taskDuration;
+            
+            
             while(user.loginUser(username, password)){
-                String [] options = {"1 ","2","3"};
-               
-                int selection = (int) JOptionPane.showInputDialog(null, "Select an option: \n 1. Add Tasks\n 2. Show Report\n 3. Quit", "Menu"
-                ,JOptionPane.INFORMATION_MESSAGE,null,options, options[0]);
+                //Display menu options
+                String selection = JOptionPane.showInputDialog(null,"1. Add Tasks\n2.Show Report\n3.Quit","Select an option: ", 0);
                 
                 switch(selection){
-                    case 1 -> JOptionPane.showMessageDialog(null, "We adding tasks");
-                    case 2 -> JOptionPane.showMessageDialog(null, "Coming Soon");
-                    case 3 -> JOptionPane.showMessageDialog(null, "Closing program");
-                    default -> JOptionPane.showMessageDialog(null, "Entered invalid input");
+                    case "1" : 
+                        int no_Tasks = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of tasks: "));
+                       Task [] tasks = new Task[no_Tasks];
+                       
+                        for(int i = 0; i < no_Tasks;i++){
+                            taskName = JOptionPane.showInputDialog("Enter task name: ");
+                            
+                            taskDescription = JOptionPane.showInputDialog("Enter task description (must be 50 characters): ");
+                            developerDetails = JOptionPane.showInputDialog("Enter developer details(First Name and Last Name): ");
+                            taskDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter total hours for task: "));
+                            taskStatus = JOptionPane.showInputDialog(null,"Select Task Status\n1. To Do\n2.Doing\n3.Done","Select Task Status: ", 0);
+                         
+                            tasks[i] = new Task(taskName,i,taskDescription,developerDetails,taskDuration,taskStatus);
+                            taskDuration += tasks[i].returnTotalHours();
+                            
+                            JOptionPane.showMessageDialog(null, "Task successfully captured\n"+ tasks[i].printTaskDetails() + taskDuration);
+                            
+                        }
+                    break;
+                    case "2" : JOptionPane.showMessageDialog(null, "Coming Soon");
+                    break;
+                    case "3" : JOptionPane.showMessageDialog(null, "Closing program");
+                    break;
+                    default : JOptionPane.showMessageDialog(null, "Entered invalid input");
                 }
                 
             }
