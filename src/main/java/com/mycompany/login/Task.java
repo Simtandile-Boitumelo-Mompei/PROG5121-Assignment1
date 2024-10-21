@@ -15,9 +15,9 @@ public class Task {
     private String taskStatus;
     
     //Create constructor for the classs
-    public Task(String taskname, String taskdescription,String developerdetails,int taskduration,String taskstatus){
+    public Task(String taskname, int taskNumber,String taskdescription,String developerdetails,int taskduration,String taskstatus){
         this.taskName = taskname;
-        this.taskNumber = taskNumber++;
+        this.taskNumber = taskNumber ;
         this.taskDescription = taskdescription;
         this.developerDetails = developerdetails;
         this.taskDuration = taskduration;
@@ -47,7 +47,7 @@ public class Task {
                 
     } 
     
-    public int returnTotalHours(){
+    public int returnTotalHours(int taskDuration){
         return taskDuration;
     }
 }

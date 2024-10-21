@@ -66,44 +66,57 @@ public class Main {
             String taskDescription;
             String developerDetails;
             String taskStatus ;
-            int taskDuration;
+            int taskDuration = 0;
             
+            //Array for taskStatus options
+            String[] optionsToChoose = {"To Do","Doing","Done"};
             
-            
+            //While user is logged in
             while(user.loginUser(username, password)){
+                
                 //Display menu options
                 String selection = JOptionPane.showInputDialog(null,"1. Add Tasks\n2.Show Report\n3.Quit","Select an option: ", 0);
                 
                 switch(selection){
                     case "1" : 
-                        int no_Tasks = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of tasks: "));
+                       //Prompt user to enter the number of tasks
+                       int no_Tasks = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of tasks: "));
+                       
+                       //Declare an object array to add task objects
                        Task [] tasks = new Task[no_Tasks];
                        
+                       //For loop for adding task details
                         for(int i = 0; i < no_Tasks;i++){
                             taskName = JOptionPane.showInputDialog("Enter task name: ");
                             
                             taskDescription = JOptionPane.showInputDialog("Enter task description (must be 50 characters): ");
-                            //tasks[i].setTaskDescription(taskDescription);
                             
                             
+                            if(tasks[i].checkTaskDescription(taskDescription)){
+                                JOptionPane.showMessageDialog(null, "Task successfully captured.");
+                                
                                 developerDetails = JOptionPane.showInputDialog("Enter developer details(First Name and Last Name): ");
                                 taskDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter total hours for task: "));
-                                taskStatus = JOptionPane.showInputDialog(null,"Select Task Status\n1. To Do\n2.Doing\n3.Done","Select Task Status: ", 0);
+                                taskStatus = (String) JOptionPane.showInputDialog(null,"Choose task status: ","Select task status",
+                                        JOptionPane.QUESTION_MESSAGE,null,optionsToChoose, optionsToChoose[2]);
 
-                                tasks[i] = new Task(taskName,taskDescription,developerDetails,taskDuration,taskStatus);
-                                taskDuration += tasks[i].returnTotalHours();
+                                tasks[i] = new Task(taskName,i,taskDescription,developerDetails,taskDuration,taskStatus);
+                                taskDuration += tasks[i].returnTotalHours(taskDuration);
 
-                                JOptionPane.showMessageDialog(null, "Task successfully captured\n"+ tasks[i].printTaskDetails()+ taskDuration);
-                            
-                          
+                                JOptionPane.showMessageDialog(null, "Task successfully captured\n"+ tasks[i].printTaskDetails());
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Please enter a task description of less than 50 characters.");
+                            }    
                         }
+                        JOptionPane.showMessageDialog(null, "Total number of hours for all tasks: "+ taskDuration);
                     break;
                     case "2" : JOptionPane.showMessageDialog(null, "Coming Soon");
                     break;
                     case "3" : JOptionPane.showMessageDialog(null, "Closing program");
                             System.exit(0);
                     break;
-                    default : JOptionPane.showMessageDialog(null, "Entered invalid input");
+                    default : JOptionPane.showMessageDialog(null, "Entered invalid input - enter values available");
                 }
                 
             }
