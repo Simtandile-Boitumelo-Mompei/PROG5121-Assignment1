@@ -15,7 +15,7 @@ public class Task {
     private String taskStatus;
     
     //Create constructor for the classs
-    public Task(String taskname, int tasknumber, String taskdescription,String developerdetails,int taskduration,String taskstatus){
+    public Task(String taskname, String taskdescription,String developerdetails,int taskduration,String taskstatus){
         this.taskName = taskname;
         this.taskNumber = taskNumber++;
         this.taskDescription = taskdescription;
@@ -25,6 +25,9 @@ public class Task {
         this.taskStatus = taskstatus;
     }
     
+    public String setTaskDescription(String taskDescription){
+        return this.taskDescription = taskDescription;
+    }
     public boolean checkTaskDescription(String taskdescription){
         return taskdescription.length() <= 50;
     }
