@@ -67,6 +67,7 @@ public class Main {
             String developerDetails;
             String taskStatus ;
             int taskDuration;
+            int taskNumber = 0;
             
             
             while(user.loginUser(username, password)){
@@ -82,20 +83,23 @@ public class Main {
                             taskName = JOptionPane.showInputDialog("Enter task name: ");
                             
                             taskDescription = JOptionPane.showInputDialog("Enter task description (must be 50 characters): ");
-                            developerDetails = JOptionPane.showInputDialog("Enter developer details(First Name and Last Name): ");
-                            taskDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter total hours for task: "));
-                            taskStatus = JOptionPane.showInputDialog(null,"Select Task Status\n1. To Do\n2.Doing\n3.Done","Select Task Status: ", 0);
-                         
-                            tasks[i] = new Task(taskName,i,taskDescription,developerDetails,taskDuration,taskStatus);
-                            taskDuration += tasks[i].returnTotalHours();
-                            
-                            JOptionPane.showMessageDialog(null, "Task successfully captured\n"+ tasks[i].printTaskDetails() + taskDuration);
+                            if(tasks[i].checkTaskDescription(taskDescription)){
+                                developerDetails = JOptionPane.showInputDialog("Enter developer details(First Name and Last Name): ");
+                                taskDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter total hours for task: "));
+                                taskStatus = JOptionPane.showInputDialog(null,"Select Task Status\n1. To Do\n2.Doing\n3.Done","Select Task Status: ", 0);
+
+                                tasks[i] = new Task(taskName,taskNumber,taskDescription,developerDetails,taskDuration,taskStatus);
+                                taskDuration += tasks[i].returnTotalHours();
+
+                                JOptionPane.showMessageDialog(null, "Task successfully captured\n"+ tasks[i].printTaskDetails()+ taskDuration);
+                            }
                             
                         }
                     break;
                     case "2" : JOptionPane.showMessageDialog(null, "Coming Soon");
                     break;
                     case "3" : JOptionPane.showMessageDialog(null, "Closing program");
+                            System.exit(0);
                     break;
                     default : JOptionPane.showMessageDialog(null, "Entered invalid input");
                 }
