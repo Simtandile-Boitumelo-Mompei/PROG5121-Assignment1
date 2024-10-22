@@ -1,13 +1,12 @@
-
 package com.mycompany.login;
 
 import java.util.*;
-import javax.swing.Icon;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class Main {
+
     public static void main(String[] args) {
-        
+
         //Declare variables that will be stored for the Login class
         String username;
         String password;
@@ -20,32 +19,32 @@ public class Main {
 
         //Initialise Scanner object for registering user
         Scanner userInput = new Scanner(System.in);
-        
+
         //User registration process
-       System.out.println("************************Register your profile********************************");
-       System.out.print("Enter your first name: ");
-       firstName = userInput.next();
+        System.out.println("************************Register your profile********************************");
+        System.out.print("Enter your first name: ");
+        firstName = userInput.next();
 
-       System.out.print("Enter your last name: ");
-       lastName = userInput.next();
+        System.out.print("Enter your last name: ");
+        lastName = userInput.next();
 
-       System.out.print("Enter username: ");
-       username = userInput.next();
-       
-       System.out.print("Enter password: ");
-       password = userInput.next();
-       
+        System.out.print("Enter username: ");
+        username = userInput.next();
+
+        System.out.print("Enter password: ");
+        password = userInput.next();
+
         //Initialise Login object
-        Login user = new Login(username,password,firstName,lastName);
-        
+        Login user = new Login();
+
         //Call registerUser method
-        System.out.println(user.registerUser());
-        
+        System.out.println(user.registerUser(username,password));
+
         //Initialise new scanner object to store login details
         Scanner userLogin = new Scanner(System.in);
-        
+
         //If statement to check correct registration before user is allowed to login
-        if(user.checkUserName() && user.checkPasswordComplexity()){
+        if (user.checkUserName(username) && user.checkPasswordComplexity(password)) {
             //User login process, Prompt user
             System.out.println("==================Login to your profile===================");
             System.out.print("Enter username: ");
@@ -53,72 +52,41 @@ public class Main {
 
             System.out.print("Enter password: ");
             login_Password = userLogin.next();
-            
+
             //Call method that returns user login status
-            System.out.println(user.returnLoginStatus(login_Username,login_Password));
+            System.out.println(user.returnLoginStatus(login_Username, login_Password,firstName,lastName));
         }
-        
-        if(user.loginUser(username,password)){
-            JOptionPane.showMessageDialog(null, "Welcome to EasyKanban");
+
+        final JDialog dialog = new JDialog();
+        dialog.setAlwaysOnTop(true);
+
+        Task newTask = new Task();
+        if (user.loginUser(username, password)) {
+            JOptionPane.showMessageDialog(dialog, "Welcome to EasyKanban");
+
             
-            //Declare task variables
-            String taskName;
-            String taskDescription;
-            String developerDetails;
-            String taskStatus ;
-            int taskDuration = 0;
-            
-            //Array for taskStatus options
-            String[] optionsToChoose = {"To Do","Doing","Done"};
-            
+    
             //While user is logged in
-            while(user.loginUser(username, password)){
-                
+            while (user.loginUser(username, password)) {
+
                 //Display menu options
-                String selection = JOptionPane.showInputDialog(null,"1. Add Tasks\n2.Show Report\n3.Quit","Select an option: ", 0);
-                
-                switch(selection){
-                    case "1" : 
-                       //Prompt user to enter the number of tasks
-                       int no_Tasks = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of tasks: "));
-                       
-                       //Declare an object array to add task objects
-                       Task [] tasks = new Task[no_Tasks];
-                       
-                       //For loop for adding task details
-                        for(int i = 0; i < no_Tasks;i++){
-                            taskName = JOptionPane.showInputDialog("Enter task name: ");
-                            
-                            taskDescription = JOptionPane.showInputDialog("Enter task description (must be 50 characters): ");
-                            
-                            
-                            if(tasks[i].checkTaskDescription(taskDescription)){
-                                JOptionPane.showMessageDialog(null, "Task successfully captured.");
-                                
-                                developerDetails = JOptionPane.showInputDialog("Enter developer details(First Name and Last Name): ");
-                                taskDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter total hours for task: "));
-                                taskStatus = (String) JOptionPane.showInputDialog(null,"Choose task status: ","Select task status",
-                                        JOptionPane.QUESTION_MESSAGE,null,optionsToChoose, optionsToChoose[2]);
+                int selection = Integer.parseInt(JOptionPane.showInputDialog(null, "1. Add Tasks\n2.Show Report\n3.Quit", "Select an option: ",JOptionPane.PLAIN_MESSAGE ));
 
-                                tasks[i] = new Task(taskName,i,taskDescription,developerDetails,taskDuration,taskStatus);
-                                taskDuration += tasks[i].returnTotalHours(taskDuration);
-
-                                JOptionPane.showMessageDialog(null, "Task successfully captured\n"+ tasks[i].printTaskDetails());
-                            }
-                            else{
-                                JOptionPane.showMessageDialog(null, "Please enter a task description of less than 50 characters.");
-                            }    
-                        }
-                        JOptionPane.showMessageDialog(null, "Total number of hours for all tasks: "+ taskDuration);
-                    break;
-                    case "2" : JOptionPane.showMessageDialog(null, "Coming Soon");
-                    break;
-                    case "3" : JOptionPane.showMessageDialog(null, "Closing program");
-                            System.exit(0);
-                    break;
-                    default : JOptionPane.showMessageDialog(null, "Entered invalid input - enter values available");
+                switch (selection) {
+                    case 1:
+                        newTask.addtask();
+                        break;
+                    case 2:
+                        JOptionPane.showMessageDialog(null, "Coming Soon");
+                        break;
+                    case 3:
+                        JOptionPane.showMessageDialog(null, "Closing program");
+                        System.exit(0);
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Entered invalid input - enter values available");
                 }
-                
+
             }
         }
     }
