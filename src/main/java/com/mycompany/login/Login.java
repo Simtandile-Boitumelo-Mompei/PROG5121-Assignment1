@@ -5,31 +5,15 @@ package com.mycompany.login;
  */
 public class Login {
 
-    private static String username;
-    private static String password;
-    private static String firstName;
-    private static String lastName;
-
-  
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
+    private String username;
+    private String password;
+    private String firstName;
+    private String lastName;
 
     //Method that checks username length contains an underscore and length is 5 characters
     public boolean checkUserName(String name) {
         return name.contains("_") && name.length() <= 5;
+       
     }
 
     //Method to check the complexity of user's password
@@ -69,10 +53,12 @@ public class Login {
                     + ", please ensure that your username contains an underscore"
                     + " and is no more than 5 characters in length";
         } else {
+            this.username = reg_username;
             System.out.println("Username captured successfully");
         }
 
         if (checkPasswordComplexity(reg_password)) {
+            this.password = reg_password;
             return "Password captured successfully ";
         } else {
             return "Password is not correctly formatted, please ensure"
@@ -83,13 +69,13 @@ public class Login {
 
     //Method to compare username and password to stored variables
     public Boolean loginUser(String username, String password) {
-        return this.getUsername().equals(username) && this.getPassword().equals(password);
+        return this.username.equals(username) && this.password.equals(password);
     }
 
     //Method to check if user login was successful
-    public String returnLoginStatus(String username, String password,String firstName,String lastName) {
+    public String returnLoginStatus(String username, String password, String firstName, String lastName) {
         if (loginUser(username, password)) {
-            return "Welcome " + this.getFirstName() + ", " + this.getLastName() + " it's great to see you.";
+            return "Welcome " + firstName + ", " + lastName + " it's great to see you.";
         } else {
             return "Username or password is incorrect, please try again!";
         }
