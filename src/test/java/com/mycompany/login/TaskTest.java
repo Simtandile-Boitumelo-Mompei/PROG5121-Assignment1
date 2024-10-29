@@ -15,12 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class TaskTest {
     
-    private Task taskManager;
+    private Task taskManager = new Task();;
     
     @BeforeEach
     public void setUp() {
          // Initialize Task manager with a specified number of tasks
-        taskManager = new Task();
         taskManager.initializeTasks(3); // Example for 3 tasks
     }
     
