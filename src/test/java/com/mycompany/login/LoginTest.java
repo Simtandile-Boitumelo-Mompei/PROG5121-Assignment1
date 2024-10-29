@@ -70,7 +70,7 @@ public class LoginTest {
         String reg_password = "Ch&&sec@ke99!";
         Login instance = new Login();
         String expResult = "Password captured successfully ";
-        String result = instance.registerUser(reg_username, reg_password);
+        String result = instance.registerUser(reg_username, reg_password,"Kyle","Williams");
         assertEquals(expResult, result);
         
     }
@@ -86,7 +86,7 @@ public class LoginTest {
         String expResult = "Username is not correctly formatted"
                     + ", please ensure that your username contains an underscore"
                     + " and is no more than 5 characters in length";
-        String result = instance.registerUser(reg_username, reg_password);
+        String result = instance.registerUser(reg_username, reg_password,"Kyle","Williams");
         assertEquals(expResult, result);
         
     }
@@ -99,7 +99,7 @@ public class LoginTest {
         String expResult = "Password is not correctly formatted, please ensure"
                     + " that the password at least 8 letters, a capital letter"
                     + " a number and a special character";
-        String result = instance.registerUser(reg_username, reg_password);
+        String result = instance.registerUser(reg_username, reg_password,"Kyle","Williams");
         assertEquals(expResult, result);
         
     }

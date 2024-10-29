@@ -10,6 +10,7 @@ public class Login {
     private String firstName;
     private String lastName;
     
+    //Setters to help with testing
     public String setUsername(String name){
        return this.username = name;
    }
@@ -55,7 +56,7 @@ public class Login {
     }
 
     //Method that checks if username and password are correctly formatted before registering a user
-    public String registerUser(String reg_username, String reg_password) {
+    public String registerUser(String reg_username, String reg_password,String firstname,String lastname) {
         if (!checkUserName(reg_username)) {
             return "Username is not correctly formatted"
                     + ", please ensure that your username contains an underscore"
@@ -64,7 +65,9 @@ public class Login {
             this.username = reg_username;
             System.out.println("Username captured successfully");
         }
-
+        //Set values to class variables
+        this.firstName = firstname;
+        this.lastName = lastname;
         if (checkPasswordComplexity(reg_password)) {
             this.password = reg_password;
             return "Password captured successfully ";
@@ -73,6 +76,8 @@ public class Login {
                     + " that the password at least 8 letters, a capital letter"
                     + " a number and a special character";
         }
+        
+       
     }
 
     //Method to compare username and password to stored variables

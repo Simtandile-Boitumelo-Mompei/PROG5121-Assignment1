@@ -38,7 +38,7 @@ public class Main {
         Login user = new Login();
 
         //Call registerUser method
-        System.out.println(user.registerUser(username, password));
+        System.out.println(user.registerUser(username, password,firstName,lastName));
 
         //Initialise new scanner object to store login details
         Scanner userLogin = new Scanner(System.in);
@@ -60,7 +60,7 @@ public class Main {
         final JDialog dialog = new JDialog();
         dialog.setAlwaysOnTop(true);
 
-        int totalHours = 0;
+        int totalHours;
         //Declare Task Class object
         Task newTask = new Task();
 
@@ -97,10 +97,10 @@ public class Main {
                                 taskDescription = JOptionPane.showInputDialog("Enter task description (must be 50 characters): ");
                                 //Check if task description meets required length by calling checkTaskDescription method
                                 if (newTask.checkTaskDescription(taskDescription)) {
-                                    JOptionPane.showMessageDialog(null, "Task successfully captured.");
+                                    JOptionPane.showMessageDialog(null, "Task description successfully captured.");
                                     break;
                                 } else {
-                                    JOptionPane.showMessageDialog(null, "Task not successfully captured.");
+                                    JOptionPane.showMessageDialog(null, "Please enter decription with less than 50 characters.");
                                 }
                             }
 

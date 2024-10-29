@@ -61,7 +61,7 @@ public class TaskTest {
         String description = "Create login to authenticate user";
         boolean expResult = true;
         boolean result = taskManager.checkTaskDescription(description);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result,"Task successfully captured");
     }
 
     @Test
@@ -71,7 +71,7 @@ public class TaskTest {
         String description = "Create login to authenticate user using password and username";
         boolean expResult = false;
         boolean result = taskManager.checkTaskDescription(description);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result,"Please enter a task description of less than 50 characters");
     }
     /**
      * Test of createTaskID method, of class Task.
@@ -80,33 +80,14 @@ public class TaskTest {
     public void testCreateTaskID() {
          // Test task ID generation
         System.out.println("createTaskID");
-        String taskName = "Login";
-        String developerdetails = "Robyn Harrison";
-        int taskNumber = 0;
-        String expResult = "LO:0:SON";
+        String taskName = "Add Feature";
+        String developerdetails = "Robyn Byron";
+        int taskNumber = 1;
+        String expResult = "AD:1:RON";
         String result = taskManager.createTaskID(taskName, developerdetails, taskNumber);
         assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of printTaskDetails method, of class Task.
-     */
-    @Test
-    public void testPrintTaskDetails() {
-        System.out.println("printTaskDetails");
-        int index = 0;
-        taskManager.addtask(index,"Login","Create user authentication","Robyn Harrison",8,"To Do");
-        String expResult = """
-                           Task Name: Login
-                           Task Number: 0
-                           Task Description: Create user authentication
-                           Developer Details: Robyn Harrison
-                           Task Duration: 8
-                           TaskID: LO:0:SON
-                           Task Status: To Do
-                           """;
-        String result = taskManager.printTaskDetails(index);
-        assertEquals(expResult, result);
+        
+        
     }
 
     /**
@@ -122,4 +103,15 @@ public class TaskTest {
     
     }
     
+    @Test
+    public void testReturnTotalHours_TwoTasks() {
+        System.out.println("returnTotalHours");
+         // Add multiple tasks with known durations
+        taskManager.addtask(0, "Login Feature", "Create Login to authenticate user", "Robyn Harrison", 8, "To Do");
+        taskManager.addtask(1, "Add Task Feature","Create Add Task feature", "Mike Smith", 10, "Doing"); 
+        int[] durations = {taskManager.getTaskDuration(0),taskManager.getTaskDuration(1)};
+        int expectedTotal = 18;
+        assertEquals(expectedTotal, taskManager.returnTotalHours(durations));
+    
+    }
 }

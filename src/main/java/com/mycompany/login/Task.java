@@ -14,7 +14,7 @@ public class Task {
     private String[] taskID;
     private String[] taskStatus;
 
-    // Getter methods for each field
+    // Getter methods for each field to help with testing
     public String getTaskName(int index) {
         return taskName[index];
     }
@@ -61,21 +61,21 @@ public class Task {
         this.developerDetails[index] = developerDetails;
         this.taskDuration[index] = taskDuration;
         this.taskNumber[index] = index;
-        this.taskID[index] = createTaskID(taskName, developerDetails, this.taskNumber[index]);
+        this.taskID[index] = createTaskID(taskName, developerDetails, this.taskNumber[index]);//Call createTaskID to create automated TaskID
         this.taskStatus[index] = taskStatus;
 
     }
-
+    //Method that checks that the task Decription length is length is below 50
     public boolean checkTaskDescription(String description) {
         return description.length() <= 50;
     }
-
+    //Method that create TaskID
     public String createTaskID(String taskName, String developerdetails, int taskNumber) {
         String firstinital = taskName.length() >= 2 ? taskName.substring(0, 2).toUpperCase() : taskName.toUpperCase();
         String secondInital = developerdetails.length() >= 3 ? developerdetails.substring(developerdetails.length() - 3).toUpperCase() : developerdetails.toUpperCase();
         return firstinital + ":" + taskNumber + ":" + secondInital;
     }
-
+    //Method to display task details
     public String printTaskDetails(int index) {
         return "Task Name: " + taskName[index] + "\n"
                 + "Task Number: " + taskNumber[index] + "\n"
@@ -86,9 +86,10 @@ public class Task {
                 + "Task Status: " + taskStatus[index] + "\n";
 
     }
-
+    //Method that returns the total duration of tasks
    public int returnTotalHours(int[] durations) {
         int totalHours = 0;
+        //Loop throught durations array and add values to totalHours variable
         for (int duration : durations) {
             totalHours += duration;
         }
