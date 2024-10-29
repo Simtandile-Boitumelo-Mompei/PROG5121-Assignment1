@@ -7,15 +7,44 @@ package com.mycompany.login;
 public class Task {
 
     private String[] taskName;
-    private  int[] taskNumber;
-    private  String[] taskDescription;
-    private  String[] developerDetails;
+    private int[] taskNumber;
+    private String[] taskDescription;
+    private String[] developerDetails;
     private int[] taskDuration;
     private String[] taskID;
     private String[] taskStatus;
 
- public Task(int no_Tasks){
-     // Initialize arrays based on the number of tasks
+    // Getter methods for each field
+    public String getTaskName(int index) {
+        return taskName[index];
+    }
+
+    public String getTaskDescription(int index) {
+        return taskDescription[index];
+    }
+
+    public String getDeveloperDetails(int index) {
+        return developerDetails[index];
+    }
+
+    public int getTaskDuration(int index) {
+        return taskDuration[index];
+    }
+
+    public int getTaskNumber(int index) {
+        return taskNumber[index];
+    }
+
+    public String getTaskID(int index) {
+        return taskID[index];
+    }
+
+    public String getTaskStatus(int index) {
+        return taskStatus[index];
+    }
+
+    public void initializeTasks(int no_Tasks) {
+        // Initialize arrays based on the number of tasks
         taskName = new String[no_Tasks];
         taskDescription = new String[no_Tasks];
         developerDetails = new String[no_Tasks];
@@ -23,9 +52,10 @@ public class Task {
         taskNumber = new int[no_Tasks];
         taskID = new String[no_Tasks];
         taskStatus = new String[no_Tasks];
- }
+    }
+
     public void addtask(int index, String taskName, String taskDescription, String developerDetails, int taskDuration, String taskStatus) {
-         // Set the task details in the arrays
+        // Set the task details in the arrays
         this.taskName[index] = taskName;
         this.taskDescription[index] = taskDescription;
         this.developerDetails[index] = developerDetails;
@@ -42,7 +72,7 @@ public class Task {
 
     public String createTaskID(String taskName, String developerdetails, int taskNumber) {
         String firstinital = taskName.length() >= 2 ? taskName.substring(0, 2).toUpperCase() : taskName.toUpperCase();
-        String secondInital = developerdetails.length() >= 3 ? developerdetails.substring(developerdetails.length()-3).toUpperCase() : developerdetails.toUpperCase();
+        String secondInital = developerdetails.length() >= 3 ? developerdetails.substring(developerdetails.length() - 3).toUpperCase() : developerdetails.toUpperCase();
         return firstinital + ":" + taskNumber + ":" + secondInital;
     }
 
@@ -57,7 +87,11 @@ public class Task {
 
     }
 
-    public int returnTotalHours(int Duration) {
-        return Duration;
+   public int returnTotalHours(int[] durations) {
+        int totalHours = 0;
+        for (int duration : durations) {
+            totalHours += duration;
+        }
+        return totalHours;
     }
 }

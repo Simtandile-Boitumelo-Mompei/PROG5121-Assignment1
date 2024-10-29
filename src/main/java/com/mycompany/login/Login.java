@@ -9,6 +9,14 @@ public class Login {
     private String password;
     private String firstName;
     private String lastName;
+    
+    public String setUsername(String name){
+       return this.username = name;
+   }
+   
+      public String setPassword(String security){
+       return this.password = security;
+   }
 
     //Method that checks username length contains an underscore and length is 5 characters
     public boolean checkUserName(String name) {
