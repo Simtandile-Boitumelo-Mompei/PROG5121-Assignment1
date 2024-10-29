@@ -87,7 +87,8 @@ public class TaskTest {
         String result = taskManager.createTaskID(taskName, developerdetails, taskNumber);
         assertEquals(expResult, result);
         
-        
+        //Additional Tests
+        assertEquals("CR:0:KEN", taskManager.createTaskID("Create Report","Ben Laken", 0));
     }
 
     /**
