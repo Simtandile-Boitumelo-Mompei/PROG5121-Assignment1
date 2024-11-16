@@ -114,7 +114,7 @@ public class Task {
         return result.toString();
     }
 
-    public String displayTaskWithLongestDuraton() {
+    public String displayTaskWithLongestDuration() {
        int maxDurationIndex = 0;
         for (int i = 1; i < index; i++) {
             if (taskDuration[i] > taskDuration[maxDurationIndex]) {
