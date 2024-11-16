@@ -4,7 +4,7 @@
  */
 package com.mycompany.login;
 
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +23,7 @@ public class TaskTest {
     public void testAddtask() {
         System.out.println("addtask");
         taskManager.initializeTasks(3);
-        int index = 0;
+        int index = 1;
         String taskName = "Login";
         String taskDescription = "Create login to authenticate user";
         String developerDetails = "Robyn Harrison";
@@ -40,7 +40,7 @@ public class TaskTest {
         assertEquals(developerDetails, taskManager.getDeveloperDetails(index));
         assertEquals(taskDuration, taskManager.getTaskDuration(index));
         assertEquals(taskStatus, taskManager.getTaskStatus(index));
-        assertEquals("LO:0:SON", taskManager.getTaskID(index));
+        assertEquals("LO:1:SON", taskManager.getTaskID(index));
 
     }
 
@@ -83,6 +83,7 @@ public class TaskTest {
 
         //Additional Tests
         assertEquals("CR:0:KEN", taskManager.createTaskID("Create Report", "Ben Laken", 0));
+        //String [] taskNames = {"Create report", "Create something "};
     }
 
     /**

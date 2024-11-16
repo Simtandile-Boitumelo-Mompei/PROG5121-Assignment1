@@ -71,13 +71,23 @@ public class Main {
 
             //While user is logged in
             while (user.loginUser(username, password)) {
-
+                String menu = """
+                            1. Add Task
+                            2. Display tasks with status Done
+                            3. Display task with longest duration
+                            4. Search task by name
+                            5. Search tasks by developer
+                            6. Delete task by name
+                            7. Display all tasks
+                            8. Quit
+                            """;
+                        
                 //Display menu options
-                int selection = Integer.parseInt(JOptionPane.showInputDialog(null, "1. Add Tasks\n2.Show Report\n3.Quit", "Select an option: ", JOptionPane.PLAIN_MESSAGE));
+                int selection = Integer.parseInt(JOptionPane.showInputDialog(null, menu, "Select an option: ", JOptionPane.PLAIN_MESSAGE));
 
                 //Switch statement for menu options
                 switch (selection) {
-                    case 1:
+                    case 1 -> {
                         //Array to store taskStatus options
                         String[] optionsToChoose = {"To Do", "Doing", "Done"};
 
@@ -114,26 +124,23 @@ public class Main {
                             //JOption menu display option
                             String taskStatus = (String) JOptionPane.showInputDialog(null, "Choose task status: ", "Select task status",
                                     JOptionPane.QUESTION_MESSAGE, null, optionsToChoose, optionsToChoose[2]);
-
+                            int taskNumber = i;
                             //Call addtask method from Task Class, using for loop increment as taskNumber
-                            newTask.addtask(i, taskName, taskStatus, developerDetails, taskDuration, taskStatus);
+                            newTask.addtask(taskNumber,taskName, taskStatus, developerDetails, taskDuration, taskStatus);
 
                             //Message Dialog to display task details
                             JOptionPane.showMessageDialog(null, "Task successfully captured\n" + newTask.printTaskDetails(i));
                         }
-                         // Call returnTotalHours with the array of durations and display the result
+                        // Call returnTotalHours with the array of durations and display the result
                         totalHours = newTask.returnTotalHours(durations);
                         JOptionPane.showMessageDialog(null, "Total duration for all tasks:\n" + totalHours);
-                        break;
-                    case 2:
-                        JOptionPane.showMessageDialog(null, "Coming Soon");
-                        break;
-                    case 3:
+                    }
+                    case 2 -> JOptionPane.showMessageDialog(null, "Coming Soon");
+                    case 3 -> {
                         JOptionPane.showMessageDialog(null, "Closing program");
                         System.exit(0);
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(null, "Entered invalid input - enter values available");
+                    }
+                    default -> JOptionPane.showMessageDialog(null, "Entered invalid input - enter values available");
                 }
                 dialog.dispose();
             }
