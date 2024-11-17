@@ -1,5 +1,7 @@
 package com.mycompany.login;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Simthandile Mompei
@@ -13,6 +15,7 @@ public class Task {
     private int[] taskDuration;
     private String[] taskID;
     private String[] taskStatus;
+    private int no_Tasks;
     private int index = 0;
 
     // Getter methods for each field to help with testing
@@ -46,6 +49,7 @@ public class Task {
 
     public void initializeTasks(int no_Tasks) {
         // Initialize arrays based on the number of tasks
+        this.no_Tasks = no_Tasks;
         taskName = new String[no_Tasks];
         taskDescription = new String[no_Tasks];
         developerDetails = new String[no_Tasks];
@@ -57,6 +61,7 @@ public class Task {
 
     public void addtask(int taskNumber, String taskName, String taskDescription, String developerDetails, int taskDuration, String taskStatus) {
         // Set the task details in the arrays
+        if(index < no_Tasks){
         this.taskNumber[index] = taskNumber;
         this.taskName[index] = taskName;
         this.taskDescription[index] = taskDescription;
@@ -65,6 +70,9 @@ public class Task {
         this.taskID[index] = createTaskID(taskName, developerDetails, this.taskNumber[index]);//Call createTaskID to create automated TaskID
         this.taskStatus[index] = taskStatus;
         index++;
+        }else{
+            JOptionPane.showMessageDialog(null, "Task limit reached. Cannot add more tasks.");
+        }
 
     }
 
@@ -107,8 +115,8 @@ public class Task {
         for (int i = 0; i < index; i++) {
             if ("Done".equalsIgnoreCase(taskStatus[i])) {
                 result.append("Developer: ").append(developerDetails[i])
-                      .append(", Task Name: ").append(taskName[i])
-                      .append(", Duration: ").append(taskDuration[i]).append(" hours\n");
+                      .append("\nTask Name: ").append(taskName[i])
+                      .append("\nDuration: ").append(taskDuration[i]).append(" hours\n");
             }
         }
         return result.toString();
@@ -140,7 +148,7 @@ public class Task {
         for (int i = 0; i < index; i++) {
             if (developerDetails[i].equalsIgnoreCase(developerName)) {
                 result.append("Task Name: ").append(taskName[i])
-                      .append(", Status: ").append(taskStatus[i]).append("\n");
+                      .append("\nStatus: ").append(taskStatus[i]).append("\n");
             }
         }
         return result.length() > 0 ? result.toString() : "No tasks found for this developer.";
@@ -171,12 +179,12 @@ public class Task {
         StringBuilder report = new StringBuilder();
         for (int i = 0; i < index; i++) {
             report.append("Task Name: ").append(taskName[i])
-                  .append(", Task Number: ").append(i + 1)
-                  .append(", Task Description: ").append(taskDescription[i])
-                  .append(", Developer: ").append(developerDetails[i])
-                  .append(", Duration: ").append(taskDuration[i])
-                  .append(", Task ID: ").append(taskID[i])
-                  .append(", Status: ").append(taskStatus[i]).append("\n\n");
+                  .append("\nTask Number: ").append(i + 1)
+                  .append("\nTask Description: ").append(taskDescription[i])
+                  .append("\nDeveloper: ").append(developerDetails[i])
+                  .append("\nDuration: ").append(taskDuration[i])
+                  .append("\nTask ID: ").append(taskID[i])
+                  .append("\nStatus: ").append(taskStatus[i]).append("\n\n");
         }
         return report.toString();
     }

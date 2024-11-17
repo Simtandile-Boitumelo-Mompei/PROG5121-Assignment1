@@ -155,6 +155,7 @@ public class Main {
                         String taskName = JOptionPane.showInputDialog("Enter task name to delete:");
                         JOptionPane.showMessageDialog(null, newTask.deleteTaskByName(taskName));
                     }
+                    case 8 -> System.exit(0);
                     default ->
                         JOptionPane.showMessageDialog(null, "Entered invalid input - enter values available");
                 }
