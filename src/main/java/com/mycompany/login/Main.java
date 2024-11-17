@@ -57,17 +57,18 @@ public class Main {
             System.out.println(user.returnLoginStatus(login_Username, login_Password, firstName, lastName));
         }
 
+        //Task Management
+        Task newTask = new Task();
         final JDialog dialog = new JDialog();
         dialog.setAlwaysOnTop(true);
 
+        //Display welcome message
+        JOptionPane.showMessageDialog(dialog, "Welcome to EasyKanban");
+
         int totalHours;
-        //Declare Task Class object
-        Task newTask = new Task();
 
         //If statement to check if user is logged in
         if (user.loginUser(username, password)) {
-            //Display welcome message
-            JOptionPane.showMessageDialog(dialog, "Welcome to EasyKanban");
 
             //While user is logged in
             while (user.loginUser(username, password)) {
@@ -81,20 +82,28 @@ public class Main {
                             7. Delete task by name
                             8. Quit
                             """;
-
-                //Display menu options
-                int selection = Integer.parseInt(JOptionPane.showInputDialog(null, menu, "Select an option: ", JOptionPane.PLAIN_MESSAGE));
+                int selection;
+                try {
+                    selection = Integer.parseInt(JOptionPane.showInputDialog(null, menu, "Menu Options", JOptionPane.PLAIN_MESSAGE));
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(dialog, "Invalid input. Please enter a number.");
+                    continue;
+                }
 
                 //Switch statement for menu options
                 switch (selection) {
                     case 1 -> {
-                        //Array to store taskStatus options
-                        String[] optionsToChoose = {"To Do", "Doing", "Done"};
 
                         //Prompt user to enter the number of tasks
-                        int no_Tasks = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of tasks: "));
-                        newTask.initializeTasks(no_Tasks); // Initialize task arrays
+                        int no_Tasks;
+                        try {
+                            no_Tasks = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of tasks:"));
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(dialog, "Invalid number. Please try again.");
+                            continue;
+                        }
 
+                        newTask.initializeTasks(no_Tasks); // Initialize task arrays
                         // Array to hold each task’s duration
                         int[] durations = new int[no_Tasks];
 
@@ -122,6 +131,7 @@ public class Main {
                             durations[i] = taskDuration;  // Store each task’s duration in the array
 
                             //JOption menu display option
+                            String[] optionsToChoose = {"To Do", "Doing", "Done"};
                             String taskStatus = (String) JOptionPane.showInputDialog(null, "Choose task status: ", "Select task status",
                                     JOptionPane.QUESTION_MESSAGE, null, optionsToChoose, optionsToChoose[2]);
                             int taskNumber = i;
@@ -139,10 +149,8 @@ public class Main {
                         JOptionPane.showMessageDialog(null, newTask.displayAllTasks());
                     case 3 ->
                         JOptionPane.showMessageDialog(null, newTask.displayTasksWithStatusDone());
-
-                    case 4 -> {
+                    case 4 ->
                         JOptionPane.showMessageDialog(null, newTask.displayTaskWithLongestDuration());
-                    }
                     case 5 -> {
                         String searchName = JOptionPane.showInputDialog("Enter task name to search:");
                         JOptionPane.showMessageDialog(null, newTask.searchTaskByName(searchName));
@@ -155,7 +163,8 @@ public class Main {
                         String taskName = JOptionPane.showInputDialog("Enter task name to delete:");
                         JOptionPane.showMessageDialog(null, newTask.deleteTaskByName(taskName));
                     }
-                    case 8 -> System.exit(0);
+                    case 8 ->
+                        System.exit(0);
                     default ->
                         JOptionPane.showMessageDialog(null, "Entered invalid input - enter values available");
                 }
