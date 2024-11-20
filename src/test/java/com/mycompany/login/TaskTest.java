@@ -6,6 +6,7 @@ package com.mycompany.login;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
@@ -101,10 +102,7 @@ public class TaskTest {
     @Test
     public void testReturnTotalHours_TwoTasks() {
         System.out.println("returnTotalHours");
-        //taskManager.initializeTasks(2);
         // Add multiple tasks with known durations
-        //taskManager.addTask(0, "Login Feature", "Create Login to authenticate user", "Robyn Harrison", 8, "To Do");
-        //taskManager.addTask(1, "Add Task Feature", "Create Add Task feature", "Mike Smith", 10, "Doing");
         int[] durations = {8, 10};
         int expectedTotal = 18;
         assertEquals(expectedTotal, taskManager.returnTotalHours(durations));
@@ -112,8 +110,8 @@ public class TaskTest {
     }
 //*******************************************PART 3 Testing********************************************************************************************
 
-    @Test
-    public void testArraysPopulatedCorrectly() {
+    @BeforeEach
+    public void setUp() {
         taskManager.initializeTasks(4);
         // Populate tasks using sample data
         taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
@@ -121,11 +119,12 @@ public class TaskTest {
         taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
         taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
 
+    }
+
+    @Test
+    public void testDeveloperArraysPopulatedCorrectly() {
         // Validate developer array
-        String[] expectedDevelopers = {"Mike Smith", "Edward Harrison", "Samantha Paulson", "Glenda Oberholzer"};
-        for (int i = 0; i < expectedDevelopers.length; i++) {
-            assertEquals(expectedDevelopers[i], taskManager.getDeveloperDetails(i));
-        }
+        assertArrayEquals(new String[]{"Mike Smith", "Edward Harrison", "Samantha Paulson", "Glenda Oberholzer"}, taskManager.getDeveloperDetails());
     }
 
     /**
@@ -133,23 +132,12 @@ public class TaskTest {
      */
     @Test
     public void testDisplayTaskWithLongestDuration() {
-        // Initialize tasks
-        taskManager.initializeTasks(4);
-
-        // Populate tasks using addTask method
-        taskManager.addTask(0,"Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
-        taskManager.addTask(1,"Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
-        taskManager.addTask(2,"Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        taskManager.addTask(3,"Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
 
         // Call the method to find the task with the longest duration
         String longestTask = taskManager.displayTaskWithLongestDuration(
                 taskManager.getDeveloperDetails(),
                 taskManager.getTaskDurations()
         );
-
-        // Output the result (for debugging purposes)
-        System.out.println(longestTask);
 
         // Validate the output
         assertTrue(longestTask.contains("Glenda Oberholzer"));
@@ -162,21 +150,14 @@ public class TaskTest {
      */
     @Test
     public void testSearchTaskByName() {
-        taskManager.initializeTasks(4);
-        // Populate tasks
-        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
-        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
-        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
-
         // Search for a specific task by name
-        String searchResult = taskManager.searchTaskByName("Create Login",taskManager.getTaskNames(),taskManager.getDeveloperDetails(),taskManager.getTaskStatuses());
+        String searchResult = taskManager.searchTaskByName("Create Login", taskManager.getTaskNames(), taskManager.getDeveloperDetails(), taskManager.getTaskStatuses());
         assertTrue(searchResult.contains("Create Login"));
         assertTrue(searchResult.contains("Mike Smith"));
         assertTrue(searchResult.contains("To Do"));
-        
-         //Test for a non-existent task
-        String notFoundResult = taskManager.searchTaskByName("Nonexistent Task",taskManager.getTaskNames(),taskManager.getDeveloperDetails(),taskManager.getTaskStatuses());
+
+        //Test for a non-existent task
+        String notFoundResult = taskManager.searchTaskByName("Nonexistent Task", taskManager.getTaskNames(), taskManager.getDeveloperDetails(), taskManager.getTaskStatuses());
         assertEquals("Task not found.", notFoundResult);
     }
 
@@ -186,17 +167,11 @@ public class TaskTest {
     @Test
     public void testSearchTasksByDeveloper() {
         System.out.println("SearchTasksByDeveloper");
-        taskManager.initializeTasks(4);
-        // Populate tasks
-        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
-        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
-        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
 
         // Search tasks by developer
-        String tasksByDeveloper = taskManager.searchTasksByDeveloper("Samantha Paulson",taskManager.getTaskNames(),taskManager.getTaskStatuses());
+        String tasksByDeveloper = taskManager.searchTasksByDeveloper("Samantha Paulson", taskManager.getTaskNames(), taskManager.getTaskStatuses());
         assertTrue(tasksByDeveloper.contains("Create Reports"));
-        
+
     }
 
     /**
@@ -205,19 +180,12 @@ public class TaskTest {
     @Test
     public void testDeleteTaskByName() {
         System.out.println("deleteTaskByName");
-        taskManager.initializeTasks(3);
-        // Populate tasks
-        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
-        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
-        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
-
         // Delete a task
-        String deleteResult = taskManager.deleteTaskByName("Create Login",taskManager.getTaskNames());
+        String deleteResult = taskManager.deleteTaskByName("Create Login", taskManager.getTaskNames());
         assertEquals("Task deleted successfully.", deleteResult);
 
         // Ensure the task is no longer in the array
-        String searchResult = taskManager.searchTaskByName("Create Login",taskManager.getTaskNames(),taskManager.getDeveloperDetails(),taskManager.getTaskStatuses());
+        String searchResult = taskManager.searchTaskByName("Create Login", taskManager.getTaskNames(), taskManager.getDeveloperDetails(), taskManager.getTaskStatuses());
         assertEquals("Task not found.", searchResult);
     }
 }
