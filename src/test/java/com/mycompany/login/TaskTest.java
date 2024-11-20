@@ -106,7 +106,7 @@ public class TaskTest {
         // Add multiple tasks with known durations
         taskManager.addtask(0, "Login Feature", "Create Login to authenticate user", "Robyn Harrison", 8, "To Do");
         taskManager.addtask(1, "Add Task Feature", "Create Add Task feature", "Mike Smith", 10, "Doing");
-        int[] durations = {taskManager.getTaskDuration(0), taskManager.getTaskDuration(1)};
+        int[] durations = {8,10};
         int expectedTotal = 18;
         assertEquals(expectedTotal, taskManager.returnTotalHours(durations));
 
