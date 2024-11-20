@@ -22,7 +22,7 @@ public class TaskTest {
     @Test
     public void testAddtask() {
         System.out.println("addtask");
-        taskManager.initializeTasks(3);
+        taskManager.initializeTasks(4);
         int index = 0;
         String taskName = "Login";
         String taskDescription = "Create login to authenticate user";
@@ -113,6 +113,7 @@ public class TaskTest {
     @BeforeEach
     public void setUp() {
         taskManager.initializeTasks(4);
+        
         // Populate tasks using sample data
         taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
         taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
@@ -123,6 +124,9 @@ public class TaskTest {
 
     @Test
     public void testDeveloperArraysPopulatedCorrectly() {
+        
+        System.out.println("Developer Details Length: " + taskManager.getDeveloperDetails().length);
+
         // Validate developer array
         assertArrayEquals(new String[]{"Mike Smith", "Edward Harrison", "Samantha Paulson", "Glenda Oberholzer"}, taskManager.getDeveloperDetails());
     }
