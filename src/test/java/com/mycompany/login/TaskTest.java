@@ -16,10 +16,37 @@ public class TaskTest {
 
     private Task taskManager = new Task();
 
-    @BeforeEach
-    public void setUp() {
-        taskManager = new Task();
+    /**
+     * Test of add task method, of class Task.
+     */
+    @Test
+    public void testAddtask() {
+        System.out.println("addtask");
         taskManager.initializeTasks(4);
+//        int index = 0;
+//        String taskName = "Login";
+//        String taskDescription = "Create login to authenticate user";
+//        String developerDetails = "Robyn Harrison";
+//        int taskDuration = 8;
+//        String taskStatus = "To do";
+
+        //Add sample task
+        //taskManager.addTask(index, taskName, taskDescription, developerDetails, taskDuration, taskStatus);
+         // Populate tasks using sample data
+        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
+        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
+
+        //Check if the task details were set correctly
+        // Use getter methods to verify task details
+//        assertEquals(taskName, taskManager.getTaskName(index));
+//        assertEquals(taskDescription, taskManager.getTaskDescription(index));
+//        assertEquals(developerDetails, taskManager.getDeveloperDetails(index));
+//        assertEquals(taskDuration, taskManager.getTaskDuration(index));
+//        assertEquals(taskStatus, taskManager.getTaskStatus(index));
+//        assertEquals("LO:0:SON", taskManager.getTaskID(index));
+
     }
 
     /**
@@ -90,17 +117,11 @@ public class TaskTest {
 
     @Test
     public void testDeveloperArraysPopulatedCorrectly() {
-         // Populate tasks using sample data
-        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
-        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
-        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
-
+        
         System.out.println("Developer Details Length: " + taskManager.getDeveloperDetails().length);
 
         // Validate developer array
         assertArrayEquals(new String[]{"Mike Smith", "Edward Harrison", "Samantha Paulson", "Glenda Oberholzer"}, taskManager.getDeveloperDetails());
-
     }
 
     /**
@@ -108,11 +129,6 @@ public class TaskTest {
      */
     @Test
     public void testDisplayTaskWithLongestDuration() {
-         // Populate tasks using sample data
-        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
-        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
-        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
 
         // Call the method to find the task with the longest duration
         String longestTask = taskManager.displayTaskWithLongestDuration(
@@ -131,12 +147,6 @@ public class TaskTest {
      */
     @Test
     public void testSearchTaskByName() {
-         // Populate tasks using sample data
-        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
-        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
-        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
-
         // Search for a specific task by name
         String searchResult = taskManager.searchTaskByName("Create Login", taskManager.getTaskNames(), taskManager.getDeveloperDetails(), taskManager.getTaskStatuses());
         assertTrue(searchResult.contains("Create Login"));
