@@ -18,6 +18,7 @@ public class TaskTest {
 
     @BeforeEach
     public void setUp() {
+        taskManager = new Task();
         taskManager.initializeTasks(4);
 
         // Populate tasks using sample data
@@ -101,6 +102,9 @@ public class TaskTest {
 
         // Validate developer array
         assertArrayEquals(new String[]{"Mike Smith", "Edward Harrison", "Samantha Paulson", "Glenda Oberholzer"}, taskManager.getDeveloperDetails());
+        String[] developers = taskManager.getDeveloperDetails();
+        assertNotNull(developers); // Ensure the array is not null
+        assertEquals(4, developers.length);
     }
 
     /**
