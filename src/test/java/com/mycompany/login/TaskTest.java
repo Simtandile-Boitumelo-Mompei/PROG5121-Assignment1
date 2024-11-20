@@ -40,7 +40,7 @@ public class TaskTest {
         assertEquals(developerDetails, taskManager.getDeveloperDetails(index));
         assertEquals(taskDuration, taskManager.getTaskDuration(index));
         assertEquals(taskStatus, taskManager.getTaskStatus(index));
-        assertEquals("LO:1:SON", taskManager.getTaskID(index));
+        assertEquals("LO:0:SON", taskManager.getTaskID(index));
 
     }
 
@@ -102,7 +102,7 @@ public class TaskTest {
     @Test
     public void testReturnTotalHours_TwoTasks() {
         System.out.println("returnTotalHours");
-        taskManager.initializeTasks(3);
+        taskManager.initializeTasks(2);
         // Add multiple tasks with known durations
         taskManager.addtask(0, "Login Feature", "Create Login to authenticate user", "Robyn Harrison", 8, "To Do");
         taskManager.addtask(1, "Add Task Feature", "Create Add Task feature", "Mike Smith", 10, "Doing");
