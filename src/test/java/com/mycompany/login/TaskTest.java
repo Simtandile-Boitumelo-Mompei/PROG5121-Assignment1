@@ -6,7 +6,7 @@ package com.mycompany.login;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
+
 
 /**
  *
@@ -15,12 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 public class TaskTest {
 
     private Task taskManager = new Task();
-
-    @BeforeEach
-    public void setUp() {
-        taskManager = new Task();
-        taskManager.initializeTasks(4); // Set up arrays for 4 tasks
-    }
 
     /**
      * Test of add task method, of class Task.
@@ -120,6 +114,7 @@ public class TaskTest {
 //*******************************************PART 3 Testing********************************************************************************************
     @Test
     public void testArraysPopulatedCorrectly() {
+        taskManager.initializeTasks(4);
         // Populate tasks using sample data
         taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
         taskManager.addtask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
@@ -138,6 +133,7 @@ public class TaskTest {
      */
      @Test
     public void testDisplayTaskWithLongestDuration() {
+        taskManager.initializeTasks(4);
         // Populate tasks
         taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
         taskManager.addtask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
@@ -155,6 +151,7 @@ public class TaskTest {
      */
      @Test
     public void testSearchTaskByName() {
+        taskManager.initializeTasks(3);
         // Populate tasks
         taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
         taskManager.addtask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
@@ -175,6 +172,7 @@ public class TaskTest {
     @Test
     public void testSearchTasksByDeveloper() {
         System.out.println("SearchTasksByDeveloper");
+        taskManager.initializeTasks(3);
         // Populate tasks
         taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
         taskManager.addtask(1, "Create Add Features", "Feature implementation", "Mike Smith", 8, "Doing");
@@ -192,6 +190,7 @@ public class TaskTest {
    @Test
     public void testDeleteTaskByName() {
         System.out.println("deleteTaskByName");
+        taskManager.initializeTasks(3);
         // Populate tasks
         taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
         taskManager.addtask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
