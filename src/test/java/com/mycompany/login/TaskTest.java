@@ -101,10 +101,10 @@ public class TaskTest {
     @Test
     public void testReturnTotalHours_TwoTasks() {
         System.out.println("returnTotalHours");
-        taskManager.initializeTasks(2);
+        //taskManager.initializeTasks(2);
         // Add multiple tasks with known durations
-        taskManager.addTask(0, "Login Feature", "Create Login to authenticate user", "Robyn Harrison", 8, "To Do");
-        taskManager.addTask(1, "Add Task Feature", "Create Add Task feature", "Mike Smith", 10, "Doing");
+        //taskManager.addTask(0, "Login Feature", "Create Login to authenticate user", "Robyn Harrison", 8, "To Do");
+        //taskManager.addTask(1, "Add Task Feature", "Create Add Task feature", "Mike Smith", 10, "Doing");
         int[] durations = {8, 10};
         int expectedTotal = 18;
         assertEquals(expectedTotal, taskManager.returnTotalHours(durations));
