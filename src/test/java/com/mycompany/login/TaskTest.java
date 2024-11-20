@@ -23,7 +23,7 @@ public class TaskTest {
     public void testAddtask() {
         System.out.println("addtask");
         taskManager.initializeTasks(3);
-        int index = 1;
+        int index = 0;
         String taskName = "Login";
         String taskDescription = "Create login to authenticate user";
         String developerDetails = "Robyn Harrison";
