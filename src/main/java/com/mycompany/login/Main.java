@@ -13,11 +13,11 @@ public class Main {
         String firstName;
         String lastName;
 
-        //Declare variables that will be compared against stored variables
-        String login_Username;
-        String login_Password;
+        // Variables for user login
+        String loginUsername;
+        String loginPassword;
 
-        //Initialise Scanner object for registering user
+        // Scanner object for console input during registration
         Scanner userInput = new Scanner(System.in);
 
         //User registration process
@@ -34,69 +34,89 @@ public class Main {
         System.out.print("Enter password: ");
         password = userInput.next();
 
-        //Initialise Login object
+        // Create a Login object for user authentication
         Login user = new Login();
 
-        //Call registerUser method
-        System.out.println(user.registerUser(username, password,firstName,lastName));
+        // Register the user and display the result
+        System.out.println(user.registerUser(username, password, firstName, lastName));
 
-        //Initialise new scanner object to store login details
+        // Scanner for console input during login
         Scanner userLogin = new Scanner(System.in);
 
-        //If statement to check correct registration before user is allowed to login
+        // Validate user registration details before allowing login
         if (user.checkUserName(username) && user.checkPasswordComplexity(password)) {
             //User login process, Prompt user
             System.out.println("==================Login to your profile===================");
             System.out.print("Enter username: ");
-            login_Username = userLogin.next();
+            loginUsername = userLogin.next();
 
             System.out.print("Enter password: ");
-            login_Password = userLogin.next();
+            loginPassword = userLogin.next();
 
-            //Call method that returns user login status
-            System.out.println(user.returnLoginStatus(login_Username, login_Password, firstName, lastName));
+            // Display login status
+            System.out.println(user.returnLoginStatus(loginUsername, loginPassword, firstName, lastName));
         }
 
+        // Task management system setup
+        Task taskManager = new Task();
         final JDialog dialog = new JDialog();
         dialog.setAlwaysOnTop(true);
 
-        int totalHours;
-        //Declare Task Class object
-        Task newTask = new Task();
+        //Display welcome message
+        JOptionPane.showMessageDialog(dialog, "Welcome to EasyKanban");
 
-        //If statement to check if user is logged in
+        int totalTaskDuration; // Tracks the total duration for all tasks
+
+        // Check if the user is successfully logged in
         if (user.loginUser(username, password)) {
-            //Display welcome message
-            JOptionPane.showMessageDialog(dialog, "Welcome to EasyKanban");
 
             //While user is logged in
             while (user.loginUser(username, password)) {
-
-                //Display menu options
-                int selection = Integer.parseInt(JOptionPane.showInputDialog(null, "1. Add Tasks\n2.Show Report\n3.Quit", "Select an option: ", JOptionPane.PLAIN_MESSAGE));
+                // Display menu options
+                String menu = """
+                            1. Add Task
+                            2. Show report
+                            3. Display tasks with status Done
+                            4. Display task with longest duration
+                            5. Search task by name
+                            6. Search tasks by developer
+                            7. Delete task by name
+                            8. Quit
+                            """;
+                int userSelection;
+                try {
+                    userSelection = Integer.parseInt(JOptionPane.showInputDialog(null, menu, "Menu Options", JOptionPane.PLAIN_MESSAGE));
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(dialog, "Invalid input. Please enter a number.");
+                    continue;// Restart the loop for invalid input
+                }
 
                 //Switch statement for menu options
-                switch (selection) {
-                    case 1:
-                        //Array to store taskStatus options
-                        String[] optionsToChoose = {"To Do", "Doing", "Done"};
+                switch (userSelection) {
+                    case 1 -> {
 
                         //Prompt user to enter the number of tasks
-                        int no_Tasks = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of tasks: "));
-                        newTask.initializeTasks(no_Tasks); // Initialize task arrays
+                        int numberOfTasks;
+                        try {
+                            numberOfTasks = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of tasks:"));
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(dialog, "Invalid number. Please try again.");
+                            continue;
+                        }
 
-                        // Array to hold each task’s duration
-                        int[] durations = new int[no_Tasks];
+                        taskManager.initializeTasks(numberOfTasks); // Initialize task arrays
+                        // Store task durations
+                        int[] taskDurations = new int[numberOfTasks];
 
-                        //For loop to promt user to add task details using JOptionPane
-                        for (int i = 0; i < no_Tasks; i++) {
+                        for (int i = 0; i < numberOfTasks; i++) {
                             //Prompt user to enter task name
                             String taskName = JOptionPane.showInputDialog("Enter task name: ");
+
+                            // Validate task description length
                             String taskDescription;
                             while (true) {
                                 taskDescription = JOptionPane.showInputDialog("Enter task description (must be 50 characters): ");
-                                //Check if task description meets required length by calling checkTaskDescription method
-                                if (newTask.checkTaskDescription(taskDescription)) {
+                                if (taskManager.checkTaskDescription(taskDescription)) {
                                     JOptionPane.showMessageDialog(null, "Task description successfully captured.");
                                     break;
                                 } else {
@@ -107,32 +127,79 @@ public class Main {
                             //Prompt user to enter developer details
                             String developerDetails = JOptionPane.showInputDialog("Enter developer details(First Name and Last Name): ");
 
-                            //Prompt user to enter task duration in hours and add it to existing totalHours variable
-                            int taskDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter total hours for task: "));
-                            durations[i] = taskDuration;  // Store each task’s duration in the array
-                            
-                            //JOption menu display option
+                            // Get task duration and validate input
+                            int taskDuration;
+                            try {
+                                taskDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter task duration (in hours):"));
+                                taskDurations[i] = taskDuration; // Store each task's duration
+                            } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(dialog, "Invalid duration. Please try again.");
+                                continue;
+                            }
+
+                            // Prompt for task status
+                            String[] optionsToChoose = {"To Do", "Doing", "Done"};
                             String taskStatus = (String) JOptionPane.showInputDialog(null, "Choose task status: ", "Select task status",
                                     JOptionPane.QUESTION_MESSAGE, null, optionsToChoose, optionsToChoose[2]);
 
-                            //Call addtask method from Task Class, using for loop increment as taskNumber
-                            newTask.addtask(i, taskName, taskStatus, developerDetails, taskDuration, taskStatus);
+                            // Add the task to the task manager
+                            taskManager.addTask(i,taskName, taskStatus, developerDetails, taskDuration, taskStatus);
 
-                            //Message Dialog to display task details
-                            JOptionPane.showMessageDialog(null, "Task successfully captured\n" + newTask.printTaskDetails(i));
+                            // Display task details
+                            JOptionPane.showMessageDialog(null, "Task successfully captured\n" + taskManager.printTaskDetails(i));
                         }
-                         // Call returnTotalHours with the array of durations and display the result
-                        totalHours = newTask.returnTotalHours(durations);
-                        JOptionPane.showMessageDialog(null, "Total duration for all tasks:\n" + totalHours);
-                        break;
-                    case 2:
-                        JOptionPane.showMessageDialog(null, "Coming Soon");
-                        break;
-                    case 3:
-                        JOptionPane.showMessageDialog(null, "Closing program");
+                        // Display the total duration of all tasks
+                        totalTaskDuration = taskManager.returnTotalHours(taskDurations);
+                        JOptionPane.showMessageDialog(null, "Total duration for all tasks:\n" + totalTaskDuration);
+                    }
+                    case 2 ->
+                        JOptionPane.showMessageDialog(null, taskManager.displayAllTasks(
+                                taskManager.getTaskNames(),
+                                taskManager.getTaskDescriptions(),
+                                taskManager.getDeveloperDetails(),
+                                taskManager.getTaskDurations(),
+                                taskManager.getTaskIDs(),
+                                taskManager.getTaskStatuses()));
+                    case 3 ->
+                        JOptionPane.showMessageDialog(null, taskManager.displayTasksWithStatusDone(
+                                taskManager.getTaskStatuses(),
+                                taskManager.getDeveloperDetails(),
+                                taskManager.getTaskNames(),
+                                taskManager.getTaskDurations()));
+                    case 4 ->
+                        JOptionPane.showMessageDialog(null, taskManager.displayTaskWithLongestDuration(
+                                taskManager.getDeveloperDetails(),
+                                taskManager.getTaskDurations()));
+                    case 5 -> {
+                        // Search for a task by name
+                        String taskToSearch = JOptionPane.showInputDialog("Enter task name to search:");
+                        JOptionPane.showMessageDialog(null, taskManager.searchTaskByName(
+                                taskToSearch,
+                                taskManager.getTaskNames(),
+                                taskManager.getDeveloperDetails(),
+                                taskManager.getTaskStatuses()));
+                    }
+                    case 6 -> {
+                        // Search for tasks by developer
+                        String developerName = JOptionPane.showInputDialog("Enter developer name to search:");
+                        JOptionPane.showMessageDialog(null, taskManager.searchTasksByDeveloper(
+                                developerName,
+                                taskManager.getTaskNames(),
+                                taskManager.getTaskStatuses()));
+                    }
+                    case 7 -> {
+                        // Delete a task by name
+                        String taskToDelete = JOptionPane.showInputDialog("Enter task name to delete:");
+                        JOptionPane.showMessageDialog(null, taskManager.deleteTaskByName(
+                                taskToDelete,
+                                taskManager.getTaskNames()));
+                    }
+                    case 8 -> {
+                        // Exit the program
+                        JOptionPane.showMessageDialog(dialog, "Goodbye!");
                         System.exit(0);
-                        break;
-                    default:
+                    }
+                    default ->
                         JOptionPane.showMessageDialog(null, "Entered invalid input - enter values available");
                 }
                 dialog.dispose();
