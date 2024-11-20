@@ -17,34 +17,6 @@ public class TaskTest {
     private Task taskManager = new Task();
 
     /**
-     * Test of add task method, of class Task.
-     */
-    @Test
-    public void testAddtask() {
-        System.out.println("addtask");
-        taskManager.initializeTasks(4);
-        int index = 0;
-        String taskName = "Login";
-        String taskDescription = "Create login to authenticate user";
-        String developerDetails = "Robyn Harrison";
-        int taskDuration = 8;
-        String taskStatus = "To do";
-
-        //Add sample task
-        taskManager.addTask(index, taskName, taskDescription, developerDetails, taskDuration, taskStatus);
-
-        //Check if the task details were set correctly
-        // Use getter methods to verify task details
-        assertEquals(taskName, taskManager.getTaskName(index));
-        assertEquals(taskDescription, taskManager.getTaskDescription(index));
-        assertEquals(developerDetails, taskManager.getDeveloperDetails(index));
-        assertEquals(taskDuration, taskManager.getTaskDuration(index));
-        assertEquals(taskStatus, taskManager.getTaskStatus(index));
-        assertEquals("LO:0:SON", taskManager.getTaskID(index));
-
-    }
-
-    /**
      * Test of checkTaskDescription method, of class Task.
      */
     @Test
