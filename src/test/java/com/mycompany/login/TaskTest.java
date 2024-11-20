@@ -20,13 +20,6 @@ public class TaskTest {
     public void setUp() {
         taskManager = new Task();
         taskManager.initializeTasks(4);
-
-        // Populate tasks using sample data
-        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
-        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
-        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
-
     }
 
     /**
@@ -97,14 +90,17 @@ public class TaskTest {
 
     @Test
     public void testDeveloperArraysPopulatedCorrectly() {
+         // Populate tasks using sample data
+        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
+        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
 
         System.out.println("Developer Details Length: " + taskManager.getDeveloperDetails().length);
 
         // Validate developer array
         assertArrayEquals(new String[]{"Mike Smith", "Edward Harrison", "Samantha Paulson", "Glenda Oberholzer"}, taskManager.getDeveloperDetails());
-        String[] developers = taskManager.getDeveloperDetails();
-        assertNotNull(developers); // Ensure the array is not null
-        assertEquals(4, developers.length);
+
     }
 
     /**
@@ -112,6 +108,11 @@ public class TaskTest {
      */
     @Test
     public void testDisplayTaskWithLongestDuration() {
+         // Populate tasks using sample data
+        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
+        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
 
         // Call the method to find the task with the longest duration
         String longestTask = taskManager.displayTaskWithLongestDuration(
@@ -130,6 +131,12 @@ public class TaskTest {
      */
     @Test
     public void testSearchTaskByName() {
+         // Populate tasks using sample data
+        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
+        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
+
         // Search for a specific task by name
         String searchResult = taskManager.searchTaskByName("Create Login", taskManager.getTaskNames(), taskManager.getDeveloperDetails(), taskManager.getTaskStatuses());
         assertTrue(searchResult.contains("Create Login"));
