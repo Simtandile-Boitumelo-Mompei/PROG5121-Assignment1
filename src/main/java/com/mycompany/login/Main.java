@@ -143,7 +143,7 @@ public class Main {
                                     JOptionPane.QUESTION_MESSAGE, null, optionsToChoose, optionsToChoose[2]);
 
                             // Add the task to the task manager
-                            taskManager.addtask(taskName, taskStatus, developerDetails, taskDuration, taskStatus);
+                            taskManager.addTask(i,taskName, taskStatus, developerDetails, taskDuration, taskStatus);
 
                             // Display task details
                             JOptionPane.showMessageDialog(null, "Task successfully captured\n" + taskManager.printTaskDetails(i));
@@ -153,25 +153,46 @@ public class Main {
                         JOptionPane.showMessageDialog(null, "Total duration for all tasks:\n" + totalTaskDuration);
                     }
                     case 2 ->
-                        JOptionPane.showMessageDialog(null, taskManager.displayAllTasks());
+                        JOptionPane.showMessageDialog(null, taskManager.displayAllTasks(
+                                taskManager.getTaskNames(),
+                                taskManager.getTaskDescriptions(),
+                                taskManager.getDeveloperDetails(),
+                                taskManager.getTaskDurations(),
+                                taskManager.getTaskIDs(),
+                                taskManager.getTaskStatuses()));
                     case 3 ->
-                        JOptionPane.showMessageDialog(null, taskManager.displayTasksWithStatusDone());
+                        JOptionPane.showMessageDialog(null, taskManager.displayTasksWithStatusDone(
+                                taskManager.getTaskStatuses(),
+                                taskManager.getDeveloperDetails(),
+                                taskManager.getTaskNames(),
+                                taskManager.getTaskDurations()));
                     case 4 ->
-                        JOptionPane.showMessageDialog(null, taskManager.displayTaskWithLongestDuration());
+                        JOptionPane.showMessageDialog(null, taskManager.displayTaskWithLongestDuration(
+                                taskManager.getDeveloperDetails(),
+                                taskManager.getTaskDurations()));
                     case 5 -> {
                         // Search for a task by name
                         String taskToSearch = JOptionPane.showInputDialog("Enter task name to search:");
-                        JOptionPane.showMessageDialog(null, taskManager.searchTaskByName(taskToSearch));
+                        JOptionPane.showMessageDialog(null, taskManager.searchTaskByName(
+                                taskToSearch,
+                                taskManager.getTaskNames(),
+                                taskManager.getDeveloperDetails(),
+                                taskManager.getTaskStatuses()));
                     }
                     case 6 -> {
                         // Search for tasks by developer
                         String developerName = JOptionPane.showInputDialog("Enter developer name to search:");
-                        JOptionPane.showMessageDialog(null, taskManager.searchTasksByDeveloper(developerName));
+                        JOptionPane.showMessageDialog(null, taskManager.searchTasksByDeveloper(
+                                developerName,
+                                taskManager.getTaskNames(),
+                                taskManager.getTaskStatuses()));
                     }
                     case 7 -> {
                         // Delete a task by name
                         String taskToDelete = JOptionPane.showInputDialog("Enter task name to delete:");
-                        JOptionPane.showMessageDialog(null, taskManager.deleteTaskByName(taskToDelete));
+                        JOptionPane.showMessageDialog(null, taskManager.deleteTaskByName(
+                                taskToDelete,
+                                taskManager.getTaskNames()));
                     }
                     case 8 -> {
                         // Exit the program

@@ -47,7 +47,7 @@ public class Task {
     public String getTaskStatus(int index) {
         return taskStatuses[index];
     }
-    
+
     //Initializes arrays to store task information.
     public void initializeTasks(int totalTasks) {
         // Initialize arrays based on the number of tasks
@@ -61,18 +61,18 @@ public class Task {
         taskStatuses = new String[totalTasks];
     }
 
-    public void addtask(String taskName, String taskDescription, String developerDetails, int taskDuration, String taskStatus) {
+    public void addTask(int taskNumber, String taskName, String taskDescription, String developerDetails, int taskDuration, String taskStatus) {
         // Set the task details in the arrays
-        if(taskCount < totalTasks){
-        this.taskNumbers[taskCount] = taskCount;
-        this.taskNames[taskCount] = taskName;
-        this.taskDescriptions[taskCount] = taskDescription;
-        this.developerDetails[taskCount] = developerDetails;
-        this.taskDurations[taskCount] = taskDuration;
-        this.taskIDs[taskCount] = createTaskID(taskName, developerDetails, this.taskNumbers[taskCount]);//Call createTaskID to create automated TaskID
-        this.taskStatuses[taskCount] = taskStatus;
-        taskCount++;
-        }else{
+        if (taskCount < totalTasks) {
+            this.taskNumbers[taskCount] = taskNumber;
+            this.taskNames[taskCount] = taskName;
+            this.taskDescriptions[taskCount] = taskDescription;
+            this.developerDetails[taskCount] = developerDetails;
+            this.taskDurations[taskCount] = taskDuration;
+            this.taskIDs[taskCount] = createTaskID(taskName, developerDetails, this.taskNumbers[taskCount]);//Call createTaskID to create automated TaskID
+            this.taskStatuses[taskCount] = taskStatus;
+            taskCount++;
+        } else {
             JOptionPane.showMessageDialog(null, "Task limit reached. Cannot add more tasks.");
         }
 
@@ -113,55 +113,56 @@ public class Task {
     }
 //***********************************************PART 3 Methods****************************************************************************************************
     //Displays all tasks with a status of "Done."
-    public String displayTasksWithStatusDone() {
+
+    public String displayTasksWithStatusDone(String[] statuses, String[] developers, String[] names, int[] durations) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < taskCount; i++) {
-            if ("Done".equalsIgnoreCase(taskStatuses[i])) {
-                result.append("Developer: ").append(developerDetails[i])
-                      .append("\nTask Name: ").append(taskNames[i])
-                      .append("\nDuration: ").append(taskDurations[i]).append(" hours\n");
+            if ("Done".equalsIgnoreCase(statuses[i])) {
+                result.append("Developer: ").append(developers[i])
+                        .append("\nTask Name: ").append(names[i])
+                        .append("\nDuration: ").append(durations[i]).append(" hours\n");
             }
         }
         return result.toString();
     }
 
     //Finds and displays the task with the longest duration.
-    public String displayTaskWithLongestDuration() {
-       int maxDurationIndex = 0;
+    public String displayTaskWithLongestDuration(String[] developers, int[] durations) {
+        int maxDurationIndex = 0;
         for (int i = 1; i < taskCount; i++) {
-            if (taskDurations[i] > taskDurations[maxDurationIndex]) {
+            if (durations[i] > durations[maxDurationIndex]) {
                 maxDurationIndex = i;
             }
         }
-        return "Developer: " + developerDetails[maxDurationIndex] + "\nDuration: " + taskDurations[maxDurationIndex] + " hours";
+        return "Developer: " + developers[maxDurationIndex] + "\nDuration: " + durations[maxDurationIndex] + " hours";
     }
-    
-     //  Search for a task by name and display Task Name, Developer, and Status
-    public String searchTaskByName(String searchName) {
+
+    //  Search for a task by name and display Task Name, Developer, and Status
+    public String searchTaskByName(String searchName, String[] names, String[] developers, String[] statuses) {
         for (int i = 0; i < taskCount; i++) {
-            if (taskNames[i].equalsIgnoreCase(searchName)) {
-                return "Task Name: " + taskNames[i] + "\nDeveloper: " + developerDetails[i] + "\nStatus: " + taskStatuses[i];
+            if (names[i].equalsIgnoreCase(searchName)) {
+                return "Task Name: " + names[i] + "\nDeveloper: " + developers[i] + "\nStatus: " + statuses[i];
             }
         }
         return "Task not found.";
     }
-    
-     // Search for tasks by developer name and display Task Name and Status
-    public String searchTasksByDeveloper(String developerName) {
+
+    // Search for tasks by developer name and display Task Name and Status
+    public String searchTasksByDeveloper(String developerName, String[] names, String[] statuses) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < taskCount; i++) {
             if (developerDetails[i].equalsIgnoreCase(developerName)) {
-                result.append("Task Name: ").append(taskNames[i])
-                      .append("\nStatus: ").append(taskStatuses[i]).append("\n");
+                result.append("Task Name: ").append(names[i])
+                        .append("\nStatus: ").append(statuses[i]).append("\n");
             }
         }
         return result.length() > 0 ? result.toString() : "No tasks found for this developer.";
     }
 
-      // Delete a task by name
-    public String deleteTaskByName(String task) {
+    // Delete a task by name
+    public String deleteTaskByName(String name, String[] names) {
         for (int i = 0; i < taskCount; i++) {
-            if (taskNames[i].equalsIgnoreCase(task)) {
+            if (names[i].equalsIgnoreCase(name)) {
                 // Shift elements to the left to remove the task
                 for (int j = i; j < taskCount - 1; j++) {
                     taskNames[j] = taskNames[j + 1];
@@ -171,10 +172,10 @@ public class Task {
                     taskStatuses[j] = taskStatuses[j + 1];
                     taskIDs[j] = taskIDs[j + 1];
                 }
-                 // Clear the last slot 
+                // Clear the last slot 
                 taskNames[taskCount - 1] = null;
                 taskDescriptions[taskCount - 1] = null;
-                developerDetails[taskCount- 1] = null;
+                developerDetails[taskCount - 1] = null;
                 taskDurations[taskCount - 1] = 0;
                 taskIDs[taskCount - 1] = null;
                 taskStatuses[taskCount - 1] = null;
@@ -186,17 +187,46 @@ public class Task {
     }
 
     // Display report of all tasks
-    public String displayAllTasks() {
+    public String displayAllTasks(String[] names,String[] descriptions, String[] developers, int[] durations, String[] ids, String[] statuses) {
         StringBuilder report = new StringBuilder();
         for (int i = 0; i < taskCount; i++) {
-            report.append("Task Name: ").append(taskNames[i])
-                  .append("\nTask Number: ").append(i + 1)
-                  .append("\nTask Description: ").append(taskDescriptions[i])
-                  .append("\nDeveloper: ").append(developerDetails[i])
-                  .append("\nDuration: ").append(taskDurations[i])
-                  .append("\nTask ID: ").append(taskIDs[i])
-                  .append("\nStatus: ").append(taskStatuses[i]).append("\n\n");
+            report.append("Task Name: ").append(names[i])
+                    .append("\nTask Number: ").append(i + 1)
+                    .append("\nTask Description: ").append(descriptions[i])
+                    .append("\nDeveloper: ").append(developers[i])
+                    .append("\nDuration: ").append(durations[i])
+                    .append("\nTask ID: ").append(ids[i])
+                    .append("\nStatus: ").append(statuses[i]).append("\n\n");
         }
         return report.toString();
     }
+//*************************************************Getters**********************************************************************************************
+    public String[] getTaskNames() {
+        return taskNames;
+    }
+
+    public int[] getTaskNumbers() {
+        return taskNumbers;
+    }
+
+    public String[] getTaskDescriptions() {
+        return taskDescriptions;
+    }
+
+    public String[] getDeveloperDetails() {
+        return developerDetails;
+    }
+
+    public int[] getTaskDurations() {
+        return taskDurations;
+    }
+
+    public String[] getTaskIDs() {
+        return taskIDs;
+    }
+
+    public String[] getTaskStatuses() {
+        return taskStatuses;
+    }
 }
+
