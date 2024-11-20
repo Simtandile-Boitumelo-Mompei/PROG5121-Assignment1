@@ -16,6 +16,18 @@ public class TaskTest {
 
     private Task taskManager = new Task();
 
+    @BeforeEach
+    public void setUp() {
+        taskManager.initializeTasks(4);
+
+        // Populate tasks using sample data
+        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
+        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
+
+    }
+
     /**
      * Test of checkTaskDescription method, of class Task.
      */
@@ -82,21 +94,9 @@ public class TaskTest {
     }
 //*******************************************PART 3 Testing********************************************************************************************
 
-    @BeforeEach
-    public void setUp() {
-        taskManager.initializeTasks(4);
-        
-        // Populate tasks using sample data
-        taskManager.addTask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
-        taskManager.addTask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
-        taskManager.addTask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        taskManager.addTask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
-
-    }
-
     @Test
     public void testDeveloperArraysPopulatedCorrectly() {
-        
+
         System.out.println("Developer Details Length: " + taskManager.getDeveloperDetails().length);
 
         // Validate developer array
