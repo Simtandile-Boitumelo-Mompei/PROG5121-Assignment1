@@ -59,10 +59,10 @@ public class Task {
         taskStatus = new String[no_Tasks];
     }
 
-    public void addtask(int taskNumber, String taskName, String taskDescription, String developerDetails, int taskDuration, String taskStatus) {
+    public void addtask(String taskName, String taskDescription, String developerDetails, int taskDuration, String taskStatus) {
         // Set the task details in the arrays
         if(index < no_Tasks){
-        this.taskNumber[index] = taskNumber;
+        this.taskNumber[index] = index;
         this.taskName[index] = taskName;
         this.taskDescription[index] = taskDescription;
         this.developerDetails[index] = developerDetails;
@@ -109,7 +109,7 @@ public class Task {
         }
         return totalHours;
     }
-
+//***********************************************PART 3 Methods****************************************************************************************************
     public String displayTasksWithStatusDone() {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < index; i++) {
@@ -167,6 +167,13 @@ public class Task {
                     taskStatus[j] = taskStatus[j + 1];
                     taskID[j] = taskID[j + 1];
                 }
+                 // Clear the last slot (optional for cleanliness)
+                taskName[index - 1] = null;
+                taskDescription[index - 1] = null;
+                developerDetails[index - 1] = null;
+                taskDuration[index - 1] = 0;
+                taskID[index - 1] = null;
+                taskStatus[index - 1] = null;
                 index--;
                 return "Task deleted successfully.";
             }
