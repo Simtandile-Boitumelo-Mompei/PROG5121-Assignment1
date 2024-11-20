@@ -129,14 +129,14 @@ public class Task {
                 maxDurationIndex = i;
             }
         }
-        return "Developer: " + developerDetails[maxDurationIndex] + ", Duration: " + taskDuration[maxDurationIndex] + " hours";
+        return "Developer: " + developerDetails[maxDurationIndex] + "\nDuration: " + taskDuration[maxDurationIndex] + " hours";
     }
     
      // c. Search for a task by name and display Task Name, Developer, and Status
     public String searchTaskByName(String searchName) {
         for (int i = 0; i < index; i++) {
             if (taskName[i].equalsIgnoreCase(searchName)) {
-                return "Task Name: " + taskName[i] + ", Developer: " + developerDetails[i] + ", Status: " + taskStatus[i];
+                return "Task Name: " + taskName[i] + "\nDeveloper: " + developerDetails[i] + "\nStatus: " + taskStatus[i];
             }
         }
         return "Task not found.";

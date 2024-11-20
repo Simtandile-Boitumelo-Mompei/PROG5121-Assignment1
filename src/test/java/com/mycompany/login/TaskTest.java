@@ -4,9 +4,9 @@
  */
 package com.mycompany.login;
 
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
@@ -15,7 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TaskTest {
 
     private Task taskManager = new Task();
-    
+
+    @BeforeEach
+    public void setUp() {
+        taskManager = new Task();
+        taskManager.initializeTasks(4); // Set up arrays for 4 tasks
+    }
+
     /**
      * Test of add task method, of class Task.
      */
@@ -110,5 +116,107 @@ public class TaskTest {
         int expectedTotal = 18;
         assertEquals(expectedTotal, taskManager.returnTotalHours(durations));
 
+    }
+//*******************************************PART 3 Testing********************************************************************************************
+    @Test
+    public void testArraysPopulatedCorrectly() {
+        // Populate tasks using sample data
+        taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addtask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+        taskManager.addtask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
+        taskManager.addtask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
+
+        // Validate developer array
+        String[] expectedDevelopers = {"Mike Smith", "Edward Harrison", "Samantha Paulson", "Glenda Oberholzer"};
+        for (int i = 0; i < expectedDevelopers.length; i++) {
+            assertEquals(expectedDevelopers[i], taskManager.getDeveloperDetails(i));
+        }
+    }
+
+    /**
+     * Test of displayTasksWithStatusDone method, of class Task.
+     */
+     @Test
+    public void testDisplayTaskWithLongestDuration() {
+        // Populate tasks
+        taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addtask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+        taskManager.addtask(2, "Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
+        taskManager.addtask(3, "Add Arrays", "Implement array handling", "Glenda Oberholzer", 11, "To Do");
+
+        // Validate longest task
+        String longestTask = taskManager.displayTaskWithLongestDuration();
+        assertTrue(longestTask.contains("Glenda Oberholzer"));
+        assertTrue(longestTask.contains("11")); // Duration
+    }
+
+    /**
+     * Test of searchTaskByName method, of class Task.
+     */
+     @Test
+    public void testSearchTaskByName() {
+        // Populate tasks
+        taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addtask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+
+        // Search for a specific task by name
+        String searchResult = taskManager.searchTaskByName("Create Login");
+        assertTrue(searchResult.contains("Create Login"));
+        assertTrue(searchResult.contains("Mike Smith"));
+        assertTrue(searchResult.contains("To Do"));
+
+        // Test for a non-existent task
+        String notFoundResult = taskManager.searchTaskByName("Nonexistent Task");
+        assertEquals("Task not found.", notFoundResult);
+    }
+    /**
+     * Test of searchTasksByDeveloper method, of class Task.
+     */
+    @Test
+    public void testSearchTasksByDeveloper() {
+        System.out.println("SearchTasksByDeveloper");
+        // Populate tasks
+        taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addtask(1, "Create Add Features", "Feature implementation", "Mike Smith", 8, "Doing");
+
+        // Search tasks by developer
+        String tasksByDeveloper = taskManager.searchTasksByDeveloper("Mike Smith");
+        assertTrue(tasksByDeveloper.contains("Create Login"));
+        assertTrue(tasksByDeveloper.contains("Create Add Features"));
+    }
+
+
+    /**
+     * Test of deleteTaskByName method, of class Task.
+     */
+   @Test
+    public void testDeleteTaskByName() {
+        System.out.println("deleteTaskByName");
+        // Populate tasks
+        taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addtask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+
+        // Delete a task
+        String deleteResult = taskManager.deleteTaskByName("Create Login");
+        assertEquals("Task deleted successfully.", deleteResult);
+
+        // Ensure the task is no longer in the array
+        String searchResult = taskManager.searchTaskByName("Create Login");
+        assertEquals("Task not found.", searchResult);
+    }
+
+    /**
+     * Test of displayAllTasks method, of class Task.
+     */
+  @Test
+    public void testDisplayAllTasks() {
+        // Populate tasks
+        taskManager.addtask(0, "Create Login", "Authentication feature", "Mike Smith", 5, "To Do");
+        taskManager.addtask(1, "Create Add Features", "Feature implementation", "Edward Harrison", 8, "Doing");
+
+        // Display all tasks
+        String allTasks = taskManager.displayAllTasks();
+        assertTrue(allTasks.contains("Create Login"));
+        assertTrue(allTasks.contains("Create Add Features"));
     }
 }
